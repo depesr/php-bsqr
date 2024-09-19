@@ -1,23 +1,22 @@
 <?php
 
-namespace com\peterbodnar\bsqr;
+namespace bsqr;
 
-use com\peterbodnar\bsqr\model;
-use com\peterbodnar\bsqr\utils\BsqrCoder;
-use com\peterbodnar\bsqr\utils\BsqrCoderException;
-use com\peterbodnar\bsqr\utils\BsqrRenderer;
-use com\peterbodnar\mx2svg\MxToSvg;
-use com\peterbodnar\qrcoder\QrCoder;
-use com\peterbodnar\qrcoder\QrCoderException;
-use com\peterbodnar\svg\Svg;
-
+use bsqr\mx2svg\MxToSvg;
+use bsqr\qrcoder\QrCoder;
+use bsqr\qrcoder\QrCoderException;
+use bsqr\svg\Svg;
+use bsqr\utils\BsqrCoder;
+use bsqr\utils\BsqrCoderException;
+use bsqr\utils\BsqrRenderer;
 
 
 /**
  * Bysquare facade to encode and render bysqr document
  */
 class BySquare {
-
+    const LZMA_PATH = '/usr/bin/xz';
+    const LZMA_PATH_HOMEBREW = '/opt/homebrew/bin/xz';
 
 	const LOGO_BOTTOM = BsqrRenderer::LOGO_BOTTOM;
 	const LOGO_RIGHT = BsqrRenderer::LOGO_RIGHT;
@@ -35,8 +34,8 @@ class BySquare {
 	protected $bsqrRenderer;
 
 
-	public function __construct() {
-		$this->bsqrCoder = new BsqrCoder();
+	public function __construct(string $lzmaPath = self::LZMA_PATH) {
+		$this->bsqrCoder = new BsqrCoder($lzmaPath);
 		$this->qrCoder = new QrCoder();
 		$this->mx2svg = new MxToSvg();
 		$this->bsqrRenderer = new BsqrRenderer();
@@ -70,6 +69,7 @@ class BySquare {
 		} catch (QrCoderException $ex) {
 			throw new BySquareException("Error while encoding data to qr-code matrix: " . $ex->getMessage(), 0, $ex);
 		}
+        $this->bsqrRenderer->setQrMatrixSize($qrMatrix->getRows(), $qrMatrix->getColumns());
 		$this->bsqrRenderer->setQrCodeSvg($qrSvg);
 		$this->bsqrRenderer->setQuiteAreaRatio(4 / $qrMatrix->getRows());
 		if ($document instanceof model\Pay) {

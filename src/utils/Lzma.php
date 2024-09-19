@@ -1,10 +1,10 @@
 <?php
 
-namespace com\peterbodnar\bsqr\utils;
+namespace bsqr\utils;
 
-use com\peterbodnar\bsqr\Exception;
-use com\peterbodnar\cmd\Command;
-use com\peterbodnar\cmd\CommandException;
+use bsqr\Command;
+use bsqr\CommandException;
+use bsqr\Exception;
 
 
 

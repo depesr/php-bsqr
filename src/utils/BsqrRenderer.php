@@ -1,10 +1,9 @@
 <?php
 
-namespace com\peterbodnar\bsqr\utils;
+namespace bsqr\utils;
 
-use com\peterbodnar\bsqr\Exception;
-use com\peterbodnar\svg\Svg;
-
+use bsqr\Exception;
+use bsqr\svg\Svg;
 
 
 /**
@@ -41,6 +40,10 @@ class BsqrRenderer {
 	protected $qrSvg;
 	/** @var float|int */
 	protected $qaRatio;
+    /** @var int */
+    protected $qrMatrixRows;
+    /** @var int */
+    protected $qrMatrixColumns;
 
 
 	/**
@@ -54,6 +57,13 @@ class BsqrRenderer {
 		$res = str_replace(["{primary}", "{secondary}"], [$this->colorPrimary, $this->colorSecondary], $res);
 		return $res;
 	}
+
+    protected function includeSvgElement($svgString): array|string|null
+    {
+        $res = preg_replace("~^<svg[^>]*?>(.*)</svg>$~", "\${1}", $svgString);
+        $res = str_replace(["{primary}", "{secondary}"], [$this->colorPrimary, $this->colorSecondary], $res);
+        return $res;
+    }
 
 
 	/**
@@ -69,6 +79,12 @@ class BsqrRenderer {
 			$this->setQuiteAreaRatio($qaRatio);
 		}
 	}
+
+    public function setQrMatrixSize(int $rows, int $columns): void
+    {
+        $this->qrMatrixRows = $rows;
+        $this->qrMatrixColumns = $columns;
+    }
 
 
 	/**
@@ -140,14 +156,15 @@ class BsqrRenderer {
 	 * @param Svg $svg - Image to render.
 	 * @return string
 	 */
-	protected function renderQrCode(array $pos, $size, $rotate, Svg $svg) {
+	protected function renderQrCode(array $pos, $size, $rotate, Svg $svg, $scaleFactorY, $scaleFactorX) {
 		$transform = "translate(" . ($pos[0]) . "," . ($pos[1]) . ")";
 		if (0 !== $rotate) {
 			$transform .= " rotate(" . $rotate . "," . ($size / 2) . "," . ($size / 2) . ")";
 		}
+        $transform .= " scale($scaleFactorX $scaleFactorY)";
 		return
 			"<g transform=\"{$transform}\">" .
-			((string) $svg->withSize($size, $size)) .
+			$this->includeSvgElement((string) $svg->withSize($size, $size)) .
 			"</g>";
 	}
 
@@ -296,7 +313,7 @@ class BsqrRenderer {
 			$qOffset = $baseSize * $this->qaRatio;
 			$qrSize = $baseSize - 2 * $qOffset;
 			$qrPos = [$basePos[0] + $qOffset, $basePos[1] + $qOffset];
-			$content .= $this->renderQrCode($qrPos, $qrSize, $qrRotate, $this->qrSvg);
+            $content .= $this->renderQrCode($qrPos, $qrSize, $qrRotate, $this->qrSvg, $qrSize/$this->qrMatrixRows, $qrSize/$this->qrMatrixColumns);
 		}
 		if ($this->showBorder) {
 			$content .= $this->renderBorder($basePos, $baseSize, $bw, $noLogo);

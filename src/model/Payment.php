@@ -1,6 +1,6 @@
 <?php
 
-namespace com\peterbodnar\bsqr\model;
+namespace bsqr\model;
 
 
 
@@ -53,9 +53,11 @@ class Payment extends Element {
 	 *
 	 * @param int|float|null $amount
 	 * @param string|NULL $currencyCode
+	 *
 	 * @return static
 	 */
-	public function setAmount($amount, $currencyCode = NULL) {
+	public function setAmount($amount, string $currencyCode = null): Payment
+	{
 		$this->amount = $amount;
 		if (NULL !== $currencyCode) {
 			$this->setCurrencyCode($currencyCode);
@@ -68,9 +70,11 @@ class Payment extends Element {
 	 * Payment currency code, 3 letter ISO4217 code.
 	 *
 	 * @param string $currencyCode
+	 *
 	 * @return static
 	 */
-	public function setCurrencyCode($currencyCode) {
+	public function setCurrencyCode(string $currencyCode): Payment
+	{
 		$this->currencyCode = $currencyCode;
 		return $this;
 	}
@@ -80,9 +84,11 @@ class Payment extends Element {
 	 * Set payment due date. Used also as first payment date for standing order.
 	 *
 	 * @param string|null $dueDate
+	 *
 	 * @return static
 	 */
-	public function setDueDate($dueDate) {
+	public function setDueDate(?string $dueDate): Payment
+	{
 		$this->dueDate = $dueDate;
 		return $this;
 	}
@@ -92,9 +98,11 @@ class Payment extends Element {
 	 * Set variable symbol.
 	 *
 	 * @param string|null $variableSymbol
+	 *
 	 * @return static
 	 */
-	public function setVariableSymbol($variableSymbol) {
+	public function setVariableSymbol(?string $variableSymbol): Payment
+	{
 		$this->variableSymbol = $variableSymbol;
 		return $this;
 	}
@@ -104,9 +112,11 @@ class Payment extends Element {
 	 * Set constant symbol.
 	 *
 	 * @param string|null $constantSymbol
+	 *
 	 * @return static
 	 */
-	public function setConstantSymbol($constantSymbol) {
+	public function setConstantSymbol(?string $constantSymbol): Payment
+	{
 		$this->constantSymbol = $constantSymbol;
 		return $this;
 	}
@@ -116,9 +126,11 @@ class Payment extends Element {
 	 * Set specific symbol.
 	 *
 	 * @param string|null $specificSymbol
+	 *
 	 * @return static
 	 */
-	public function setSpecificSymbol($specificSymbol) {
+	public function setSpecificSymbol(?string $specificSymbol): Payment
+	{
 		$this->specificSymbol = $specificSymbol;
 		return $this;
 	}
@@ -130,9 +142,11 @@ class Payment extends Element {
 	 * @param string|null $variableSymbol
 	 * @param string|null $constantSymbol
 	 * @param string|null $specificSymbol
+	 *
 	 * @return static
 	 */
-	public function setSymbols($variableSymbol, $constantSymbol, $specificSymbol = NULL) {
+	public function setSymbols(?string $variableSymbol = null, string $constantSymbol = null, string $specificSymbol = null): Payment
+	{
 		$this->variableSymbol = $variableSymbol;
 		$this->constantSymbol = $constantSymbol;
 		if (func_num_args() > 2) {

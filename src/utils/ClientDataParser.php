@@ -1,9 +1,9 @@
 <?php
 
-namespace com\peterbodnar\bsqr\utils;
+namespace bsqr\utils;
 
-use com\peterbodnar\bsqr\Exception;
-use com\peterbodnar\bsqr\model;
+use bsqr\Exception;
+use bsqr\model;
 
 
 

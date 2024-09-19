@@ -1,8 +1,8 @@
 <?php
 
-namespace com\peterbodnar\bsqr\utils;
+namespace bsqr\utils;
 
-use com\peterbodnar\bsqr\model;
+use bsqr\model;
 
 
 
@@ -22,8 +22,11 @@ class ClientDataEncoder {
 	 * @param string - Value
 	 * @return string
 	 */
-	protected function encodeValue($value) {
-		return str_replace($this->separator, " ", $value);
+	protected function encodeValue(string $value = null) {
+		if (!is_null($value)) {
+			return str_replace($this->separator, " ", $value);
+		}
+		return null;
 	}
 
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace com\peterbodnar\bsqr;
+namespace bsqr;
 
 
 

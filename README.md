@@ -8,19 +8,17 @@ Only PayBySquare document type is currently supported.
 
 ## Requirements
 
-This library uses `xz` system executable (`/usr/bin/xz`) for lzma compression/decompression.  
-Any suggestions how to remove this dependency are welcome.
-
+This library uses `xz` system executable (`/usr/bin/xz`) for lzma compression/decompression. Path should be set in BySquare constructor.
 
 ## Instalation
 
-`composer require peterbodnar.com/bsqr`
+`composer require depesr/php-bsqr`
 
 
 ## Define a PayBySquare document
 
 ```php
-use com\peterbodnar\bsqr;
+use bsqr;
 
 $document = (new bsqr\model\Payment())
 	->setDueDate("0000-00-00") // YYYY-MM-DD
@@ -34,7 +32,7 @@ According to the specification, document can contain invoice ID, multiple paymen
 payments can contain multiple bank accounts, extensions, etc.
 
 ```php
-use com\peterbodnar\bsqr;
+use bsqr;
 
 $document = (new bsqr\model\Pay())
 	->setInvoiceId("1234567890")
@@ -59,7 +57,7 @@ $document = (new bsqr\model\Pay())
 ## Render document to svg including BySqure logo and border
 
 ```php
-use com\peterbodnar\bsqr;
+use bsqr;
 
 $bysquare = new bsqr\BySquare();
 
@@ -70,7 +68,7 @@ $svg = (string) $bysquare->render($document);
 ## Get bsqr data only
 
 ```php
-use com\peterbodnar\bsqr;
+use bsqr;
 
 $bsqrCoder = new bsqr\utils\BsqrCoder();
 
@@ -82,7 +80,7 @@ Use any qr-code library to encode/render data to qr matrix/image.
 ## Parse bsqr data
 
 ```php
-use com\peterbodnar\bsqr;
+use bsqr;
 
 $bsqrCoder = new bsqr\utils\BsqrCoder();
 
@@ -92,6 +90,7 @@ $document = $bsqrCoder->parse($bsqrData);
 
 ## Links
 
+- https://github.com/prog/php-bsqr
 - https://www.sbaonline.sk/projekt/projekty-z-oblasti-platobnych-sluzieb/
 - https://bsqr.co/schema/
 - http://www.bysquare.com/

@@ -1,11 +1,11 @@
 <?php
 
-namespace com\peterbodnar\bsqr\utils;
+namespace bsqr\utils;
 
-use com\peterbodnar\base32\Base32;
-use com\peterbodnar\base32\Base32Exception;
-use com\peterbodnar\bsqr\Exception;
-use com\peterbodnar\bsqr\model;
+use bsqr\Base32;
+use bsqr\Base32Exception;
+use bsqr\Exception;
+use bsqr\model;
 
 
 
@@ -36,11 +36,11 @@ class BsqrCoder {
 	}
 
 
-	public function __construct() {
+	public function __construct(string $lzmaPath) {
 		$this->base32 = new Base32("0123456789ABCDEFGHIJKLMNOPQRSTUV");
 		$this->cldEncoder = new ClientDataEncoder();
 		$this->cldParser = new ClientDataParser();
-		$this->lzma = new Lzma();
+		$this->lzma = new Lzma($lzmaPath);
 	}
 
 

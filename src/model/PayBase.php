@@ -1,6 +1,6 @@
 <?php
 
-namespace com\peterbodnar\bsqr\model;
+namespace bsqr\model;
 
 
 
