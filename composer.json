@@ -7,7 +7,7 @@
 	"require": {
 		"php": ">=8.0",
 		"ext-imagick": "*",
-		"bacon/bacon-qr-code": "v3.0.0"
+		"bacon/bacon-qr-code": "^v3"
 	},
     "version": "1.0"
 }
